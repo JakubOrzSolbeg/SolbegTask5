@@ -11,8 +11,8 @@ public static class Setup
     public static IServiceCollection AddDataRepository(this IServiceCollection services)
     {
         services.AddDbContext<MainDbContext1>();
-        services.AddScoped<Repository<User>, AccountRepository>();
-        services.AddScoped<Repository<Product>, ProductRepository>();
+        services.AddScoped<ExtendedRepository<User>, AccountRepository>();
+        services.AddScoped<ExtendedRepository<Product>, ProductRepository>();
         services.AddScoped<Repository<Brand>, BrandRepository>();
         return services;
     }

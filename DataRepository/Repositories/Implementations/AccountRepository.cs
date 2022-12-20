@@ -50,7 +50,13 @@ public class AccountRepository : ExtendedRepository<User>
 
     public override async Task<User?> GetByPredicate(Predicate<User> predicate)
     {
-        return await MainDbContext.Users.FirstOrDefaultAsync(user => predicate(user));
+        User? result = null;
+        await Task.Run(() =>
+        {
+            result = MainDbContext.Users.AsEnumerable()
+                .FirstOrDefault(user => predicate(user));
+        });
+        return result;
     }
 
     public override async Task<List<TResult>> GetAllAndSelect<TResult>(Func<User, TResult> selector)

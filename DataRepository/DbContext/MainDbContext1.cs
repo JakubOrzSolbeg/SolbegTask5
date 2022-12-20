@@ -1,4 +1,5 @@
 using DataRepository.Entities;
+using DataRepository.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -23,6 +24,18 @@ public class MainDbContext1 : Microsoft.EntityFrameworkCore.DbContext
         modelBuilder.ApplyConfiguration(new UserConfiguration());
         modelBuilder.ApplyConfiguration(new ProductConfiguration());
         modelBuilder.ApplyConfiguration(new BrandConfiguration());
+
+        modelBuilder.Entity<User>().HasData(
+            new User()
+            {
+                Id = 1,
+                Login = "admin",
+                Passhash = "84875ba07b2435a7910cf5098ee92d9caa7d56f161df52336955e91c98f86172",
+                Salt = "0e4cbe8a48eb4414a36fbadf88fe1c90",
+                UserType = UserType.Admin
+            }
+            // password zaq12wsx
+        );
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend", "Backend\Backend.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataRepository", "DataRepository\DataRepository.csproj", "{4B9D29E3-E029-4729-9C2C-A8D90B9C3790}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dtos", "Dtos\Dtos.csproj", "{331BAA43-00E7-4F5E-BDA1-085F5A1AB9A7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{4B9D29E3-E029-4729-9C2C-A8D90B9C3790}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4B9D29E3-E029-4729-9C2C-A8D90B9C3790}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4B9D29E3-E029-4729-9C2C-A8D90B9C3790}.Release|Any CPU.Build.0 = Release|Any CPU
+		{331BAA43-00E7-4F5E-BDA1-085F5A1AB9A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{331BAA43-00E7-4F5E-BDA1-085F5A1AB9A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{331BAA43-00E7-4F5E-BDA1-085F5A1AB9A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{331BAA43-00E7-4F5E-BDA1-085F5A1AB9A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

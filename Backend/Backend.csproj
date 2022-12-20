@@ -16,15 +16,12 @@
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Services\Implementations" />
-      <Folder Include="Utils" />
+        <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="7.0.6" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\DataRepository\DataRepository.csproj" />
+      <ProjectReference Include="..\Dtos\Dtos.csproj" />
     </ItemGroup>
 
 </Project>

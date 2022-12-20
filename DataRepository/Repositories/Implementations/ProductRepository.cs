@@ -52,7 +52,13 @@ public class ProductRepository : ExtendedRepository<Product>
 
     public override async Task<Product?> GetByPredicate(Predicate<Product> predicate)
     {
-        return await MainDbContext.Products.FirstOrDefaultAsync(product => predicate(product));
+        Product? result = null;
+        await Task.Run(() =>
+        {
+            result = MainDbContext.Products.AsEnumerable()
+                .FirstOrDefault(product=> predicate(product));
+        });
+        return result;
     }
 
     public override async Task<List<TResult>> GetAllAndSelect<TResult>(Func<Product, TResult> selector)
