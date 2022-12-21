@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 
+var myCorsPolicyName = "corspolicy";
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -49,6 +50,16 @@ builder.Services.AddSwaggerGen(options =>
     options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
 
+builder.Services.AddCors(p => p.AddPolicy(myCorsPolicyName, build =>
+{
+    foreach (var allowedHost in builder.Configuration.GetSection("AllowedCrossOrigin").Get<List<string>>())
+    {
+        Console.WriteLine(allowedHost);
+        build.WithOrigins(allowedHost).AllowAnyMethod().AllowAnyHeader();
+    }
+
+}));
+
 
 
 var app = builder.Build();
@@ -64,5 +75,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.UseCors(myCorsPolicyName);
 
 app.Run();

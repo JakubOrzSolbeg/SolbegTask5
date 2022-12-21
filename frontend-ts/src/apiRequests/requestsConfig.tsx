@@ -1,0 +1,1 @@
+export const apiBaseString: string = "http://localhost:5004";
