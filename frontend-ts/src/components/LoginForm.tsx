@@ -1,5 +1,10 @@
-import React, {useRef} from "react";
+import React from "react";
 import Login from "../apiRequests/login";
+
+type LoginFormProps = {
+    onLogin: (arg0: string) => void
+}
+
 
 type LoginFormState = {
     login: string,
@@ -8,8 +13,8 @@ type LoginFormState = {
     canBeSubmitted: boolean
 }
 
-export default class LoginForm extends React.Component<any, LoginFormState>{
-    constructor(props: any) {
+export default class LoginForm extends React.Component<LoginFormProps, LoginFormState>{
+    constructor(props: LoginFormProps) {
         super(props);
 
         this.handle_submit = this.handle_submit.bind(this);
@@ -25,20 +30,20 @@ export default class LoginForm extends React.Component<any, LoginFormState>{
 
     handle_submit(event: any){
         event.preventDefault();
-        console.log("Form is now submited")
         Login(this.state.login, this.state.password).then(result => {
             if(!result.isSuccess){
                 this.setState({errors: result.errors})
             }
             else{
                 console.log(result.body);
-                this.props.onclose();
+                this.props.onLogin(result.body??"");
             }
         })
     }
 
     handle_signup(event: any){
         localStorage.setItem("kawa", this.state.password);
+        console.warn("Handle signup not yet implemented");
     }
 
     componentDidUpdate(prevProps:any, prevState:LoginFormState) {

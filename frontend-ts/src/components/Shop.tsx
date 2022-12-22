@@ -2,8 +2,14 @@ import React from "react";
 import ProductOverview from "../models/ProductOverview";
 import GetProductList from "../apiRequests/getProductList";
 import Loader from "./Loader";
-import {ProductCard} from "./ProductCard";
+import ProductCard from "./ProductCard";
+import ShopAppState from "../models/AppState";
 
+type ShopProps = {
+    appState: ShopAppState,
+    onProductAdded: (product: number) => void
+    onProductRemoved: (product: number) => void
+}
 
 type ShopState = {
     products: Array<ProductOverview>;
@@ -11,7 +17,7 @@ type ShopState = {
     loadError: string;
 };
 
-class Shop extends React.Component<any, ShopState> {
+class Shop extends React.Component<ShopProps, ShopState> {
 
     state: ShopState = {
         products: [],
@@ -44,14 +50,12 @@ class Shop extends React.Component<any, ShopState> {
         return (
             <div className={"products"}>
                 {this.state.products.map(product => {
+                    const productAlreadyInCart = this.props.appState.productsInCart.includes(product.productId);
                     return (
-                        <ProductCard
-                        photoUrl={product.photoUrl}
-                        productId={product.productId}
-                        productName={product.productName}
-                        price={product.price}
-                        key={product.productId}
-                        />
+                        <ProductCard productAlreadyInCart={productAlreadyInCart}
+                                     product={product}
+                                     onProductMoveToCart={(productAlreadyInCart)? this.props.onProductRemoved : this.props.onProductAdded}
+                                     key={product.productId} />
                     )
                 })}
             </div>

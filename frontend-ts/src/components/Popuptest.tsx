@@ -6,7 +6,7 @@ export default function PopUpComponent() {
     return (
         <Popup trigger={<button className="button"> Open Modal </button>} modal>
             <div className={"modal"}>
-                <LoginForm />
+                <LoginForm onLogin={() => console.log("Test model on login")} />
             </div>
         </Popup>
     );

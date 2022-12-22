@@ -1,24 +1,49 @@
-import React from "react";
-import {FunctionComponent} from "react";
+import React, {useRef} from "react";
 import ProductOverview from "../models/ProductOverview";
+import Popup from "reactjs-popup";
+import {ProductDetailedCard} from "./ProductDetailedCard";
+import ConvertCurrency from "../utils/convertCurrency";
 
-export const ProductCard: FunctionComponent<ProductOverview> =
-    ({productId, productName, photoUrl, price}) =>{
+type ProductCardTypes = {
+    productAlreadyInCart: boolean,
+    product: ProductOverview,
+    onProductMoveToCart: (productId: number) => void
+}
 
-        let formattedCurrency = price.toLocaleString('pl-PL', {
-            minimumIntegerDigits: 1,
-            useGrouping: false,
-            maximumFractionDigits: 2,
-            minimumFractionDigits: 2,
-            currency: "pln"
-        })
+export default function ProductCard(props: ProductCardTypes){
+    const product = props.product
+    const [src, setSrc] = React.useState(product.photoUrl);
+    const formattedCurrency: string = ConvertCurrency(product.price);
+
+    const ref = useRef(null);
+
+    const onAddedToCart = () =>{
+        // @ts-ignore
+        ref.current.close();
+        props.onProductMoveToCart(product.productId);
+    }
+
+    const imgPlaceholder = require("../img/placeholder-image.png")
+    const productCart = <div className={"productCard"}>
+
+                            <img
+                                placeholder={imgPlaceholder}
+                                src={src}
+                                onError={() => setSrc(imgPlaceholder)}
+                                alt={product.productName} />
+                            <p>{product.productName } {formattedCurrency} PLN</p>
+                        </div>
 
     return(
-        <div className={"productCard"} onClick={() => {console.log("Clicked product "+productId)}}>
-            <img src={require("../img/placeholder-image.png")} alt={productName} />
-            <p>{productName} {formattedCurrency} PLN</p>
-            <button>Add to cart</button>
+        <div>
+            <Popup ref={ref} open={false} trigger={productCart} modal>
+                    <ProductDetailedCard
+                        onMoveToCart={onAddedToCart}
+                        isAlreadyInCart={props.productAlreadyInCart}
+                        productId={product.productId}/>
+            </Popup>
         </div>
+
     )
 }
 

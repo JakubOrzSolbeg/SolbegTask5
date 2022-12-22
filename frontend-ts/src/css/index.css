@@ -43,11 +43,29 @@ code {
 }
 
 .NavBar, .Footer{
-  background: #30003b;
-  height: 10vh;
+  /*background: #30003b;*/
+  height: 5vh;
   z-index: 10;
   color: #d8d4e0;
+  background: rgb(56,5,69);
+  background: linear-gradient(45deg, rgb(46, 1, 58) 0%, rgb(63, 1, 77) 30%, rgb(65, 26, 68) 72%, rgb(90, 11, 101) 100%);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  box-shadow: rgba(17, 12, 46, 0.30) 0 48px 100px 0;
 }
+
+@keyframes gradient {
+  0% {
+    background-position: 0 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
+
 
 .Footer{
   display: flex;
@@ -74,7 +92,7 @@ main{
 
 .productCard{
   width: 250px;
-  height: 400px;
+  height: 300px;
   border: #2a0156 solid 3px;
   margin: 5px;
   border-radius: 20px;
@@ -86,6 +104,19 @@ main{
   align-items: center;
   color: #e0b600;
   font-size: 1.3em;
+  box-shadow: rgba(17, 12, 46, 0.15) 0 48px 100px 0;
+}
+
+.productCardDetailed{
+  width: 400px;
+  height: 600px;
+}
+
+.productCardDetailed > button {
+  width: 250px;
+  height: 50px;
+  border-radius: 25px;
+  font-size: 1.3rem;
 }
 
 .productCard:hover{
@@ -120,6 +151,11 @@ main{
   border-radius: 20px;
 }
 
+.modal-bigger{
+  height: 500px;
+  width: 700px;
+}
+
 .login-form{
   position: relative;
   height: 100%;
@@ -146,4 +182,106 @@ main{
 
 #form-errors{
   color: #e00500;
+}
+
+.button-base{
+  min-height: 30px;
+  min-width: 20px;
+  border-radius: 5px;
+  border: #30003b solid 2px;
+  background: rgb(148,66,168);
+  background: radial-gradient(circle, rgba(148,66,168,1) 0%, rgba(143,8,157,1) 100%);
+}
+
+.button-base:hover{
+  filter: brightness(120%);
+}
+
+.shopCartItemCount{
+  position: absolute;
+  overflow: hidden;
+  top: 5px;
+  right: 5px;
+  background: rgb(79,10,96);
+  background: linear-gradient(32deg, rgba(79,10,96,1) 0%, rgba(131,10,144,1) 100%);
+  color: #e0b600;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  border: #170000 solid 1px;
+}
+
+.barButton{
+  margin: 4px;
+  min-width: 100px;
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+}
+
+.barButton > button, .barButton > a{
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.barButton > a, button, input[type=submit], input[type=button]{
+  background: radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%),
+  radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%);
+  border: #2a0156 solid 1px;
+  border-radius: 5px;
+}
+
+.barButton > a{
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #170000;
+}
+
+button:hover, input[type=submit]:hover, input[type=button]:hover{
+  filter: brightness(120%);
+}
+
+input[type=submit]:disabled, input[type=submit]:disabled:hover{
+  opacity: 0.4;
+}
+
+.checkoutResult{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  font-size: 1.2rem;
+}
+
+.checkoutResult > button{
+  font-size: 1.3rem;
+}
+
+.checkoutResult > img{
+  width: 50%;
+}
+
+.decision-buttons{
+  font-size: 1.4em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.decision-buttons > button{
+  font-size: 1.8rem;
+  margin: 10px;
+  min-width: 300px;
 }

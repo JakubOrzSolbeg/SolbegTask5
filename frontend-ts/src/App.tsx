@@ -2,53 +2,101 @@ import React from 'react';
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
-import SecondComponent from "./components/SecondComponent";
 import Shop from "./components/Shop";
-
-
-import ControlledPopup from "./components/testPopUp";
 import ShopAppState from "./models/AppState";
+import {ShopCardList} from "./components/ShopCardList";
 
 export class App extends React.Component<any, ShopAppState> {
-    constructor(props: any) {
-        super(props);
-        this.setState((JSON.parse(localStorage.getItem("shopState")??"{}")) as ShopAppState)
-        console.log(this.state);
-    }
     state: ShopAppState= {
+        firstRender: true,
         isLogged: false,
         productsInCart: [],
         cardItemCount: 0,
         authToken: ""
     }
 
+    constructor(props: any) {
+        super(props);
+        this.onSuccesfullLogin = this.onSuccesfullLogin.bind(this);
+        this.onLogout = this.onLogout.bind(this);
+        this.onProductAdded = this.onProductAdded.bind(this);
+        this.onProductRemoved = this.onProductRemoved.bind(this)
+        this.onClearCart = this.onClearCart.bind(this);
+    }
+
     componentDidUpdate(prevProps: Readonly<any>, prevState: Readonly<ShopAppState>, snapshot?: any) {
         localStorage.setItem("shopState", JSON.stringify(this.state))
     }
 
-    onItemAddedToList(productNumber: number){
+
+    componentDidMount() {
+        if (this.state.firstRender){
+            let memoryShopState = JSON.parse(localStorage.getItem("shopState")??"{}") as ShopAppState;
+            memoryShopState.firstRender = false;
+            this.setState(memoryShopState);
+        }
+    }
+
+    onProductAdded(productId: number){
         if (this.state.productsInCart)
         this.setState({
             cardItemCount: this.state.cardItemCount + 1,
+            productsInCart: [...this.state.productsInCart, productId]
         })
     }
 
+    onProductRemoved(productId: number){
+        if (this.state.productsInCart.includes(productId)){
+            this.setState({
+                cardItemCount: this.state.cardItemCount - 1,
+                productsInCart: this.state.productsInCart.filter(product => product !== productId)
+            })
+        }
+    }
+
+    onClearCart(){
+        this.setState({
+            cardItemCount: 0,
+            productsInCart: []
+        })
+        window.location.replace("/")
+    }
+
+    onSuccesfullLogin(token: string){
+        this.setState({isLogged: true, authToken: token})
+    }
+
+    onLogout(){
+        this.setState({isLogged: false, authToken: ""})
+    }
+
     render(){
-        console.log(this.state);
           return(
             <div className="App">
-                <Header />
+                <Header
+                    appState={this.state}
+                    onProductAdd={this.onProductAdded}
+                    onSuccesfulLogin={this.onSuccesfullLogin}
+                    onLogout={this.onLogout}
+                />
                 <main>
-                    <button onClick={() => this.onItemAddedToList(1)}> Add random item</button>
                   <Router>
                       <Routes>
-                          <Route path={"/"} element={<Shop />} />
-                          <Route path={"/lol"} >
-                            <Route path={":userId"} element={<SecondComponent />} />
-                          </Route>
+                          <Route path={"/"} element={
+                              <Shop onProductRemoved={this.onProductRemoved}
+                                    appState={this.state}
+                                    onProductAdded={this.onProductAdded}
+                              />} />
+                          <Route path={"/myCart"} element={
+                              <ShopCardList
+                                  onProductRemove={this.onProductRemoved}
+                                  onLogin={this.onSuccesfullLogin}
+                                  shopAppState={this.state}
+                                  onClearCart={this.onClearCart}
+                                />
+                          } />
                       </Routes>
                   </Router>
-                    <ControlledPopup />
                 </main>
                 <Footer />
             </div>

@@ -31,10 +31,10 @@ public class ShopController : ControllerBase
         return await _shopService.GetShoppingCartProducts(products);
     }
 
-    [HttpGet]
-    public async Task<ActionResult<ApiResultBase<ProductDetails>>> GetProductDetails(int productId)
+    [HttpGet("{id}")]
+    public async Task<ActionResult<ApiResultBase<ProductDetails>>> Products(int id)
     {
-        return await _shopService.GetProductDetails(productId);
+        return await _shopService.GetProductDetails(id);
     }
 
     [HttpPost]

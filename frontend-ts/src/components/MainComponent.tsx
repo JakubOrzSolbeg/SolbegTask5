@@ -1,7 +1,7 @@
 import React from "react";
 import Popup from "reactjs-popup";
 import GetProductList from "../apiRequests/getProductList";
-import {ProductCard} from "./ProductCard";
+import ProductCard from "./ProductCard";
 
 export default function MainComponent(){
 

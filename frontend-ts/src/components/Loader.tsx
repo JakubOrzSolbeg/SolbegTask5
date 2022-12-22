@@ -1,7 +1,11 @@
 import React from "react";
+import "../css/loader.css"
 
 export default function Loader(){
     return(
-        <div> LOADING.....</div>
+        <div className={"loader"}>
+            <div></div>
+            <div></div>
+        </div>
     )
 }

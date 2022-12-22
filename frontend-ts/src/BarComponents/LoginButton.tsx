@@ -2,23 +2,26 @@ import React, {useRef} from "react";
 import LoginForm from "../components/LoginForm";
 import Popup from "reactjs-popup";
 
-export default function LoginButton(){
+type LoginButtonProps = {
+    onSuccesfulLogin: (token: string) => void
+}
+
+
+export default function LoginButton(props: LoginButtonProps){
     const ref = useRef(null);
 
     let button: any = <button>Login</button>
-    const handleClose = () =>{
-        console.log("Handle close")
+    const handleLogin= (token: string) =>{
         // @ts-ignore
         ref.current.close();
+        props.onSuccesfulLogin(token);
         }
 
         return(
-            <div className={"bar-button"}>
                 <Popup ref={ref} open={false} trigger={button} modal>
                     <div className={"modal"}>
-                        <LoginForm onclose={handleClose}/>
+                        <LoginForm onLogin={handleLogin}/>
                     </div>
                 </Popup>
-            </div>
         )
 }
