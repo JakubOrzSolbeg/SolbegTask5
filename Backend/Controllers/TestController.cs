@@ -1,5 +1,5 @@
 using Backend.Utils;
-using DataRepository.Enums;
+using Dtos.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Extensions;
@@ -25,7 +25,7 @@ public class TestController : ControllerBase
     }
 
     [HttpGet]
-    [CustomAuthorize(UserType.Worker | UserType.Admin)]
+    [CustomAuthorize(UserType.Worker)]
     public IActionResult GetForWorker()
     {
         return Ok("This can be seen by workers but also admins");

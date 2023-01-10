@@ -5,6 +5,9 @@ import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import Shop from "./components/Shop";
 import ShopAppState from "./models/AppState";
 import {ShopCardList} from "./components/ShopCardList";
+import JwtTester from "./components/jwtTestet";
+import {OrderList2} from "./components/OrderList2";
+import {WorkerPanel} from "./components/WorkerPanel";
 
 export class App extends React.Component<any, ShopAppState> {
     state: ShopAppState= {
@@ -94,6 +97,15 @@ export class App extends React.Component<any, ShopAppState> {
                                   shopAppState={this.state}
                                   onClearCart={this.onClearCart}
                                 />
+                          } />
+                          <Route path={"/token"} element={
+                              <JwtTester />
+                          } />
+                          <Route path={"orders"} element={
+                              <OrderList2 />
+                          } />
+                          <Route path={"workerPanel"} element={
+                              <WorkerPanel />
                           } />
                       </Routes>
                   </Router>

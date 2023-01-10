@@ -1,20 +1,72 @@
 import React from "react";
+import MakeOrder from "../apiRequests/makeOrder";
+import Loader from "./Loader";
 
 type CheckoutResultProps = {
     onCartClear: () => void
 }
 
-export default function CheckoutResult(props: CheckoutResultProps){
-    const returnToMenu = () =>{
-        props.onCartClear();
-        window.location.replace("/")
+type CheckoutResultState = {
+    isCompleted: boolean,
+    isSuccessful: boolean
+}
+
+export class CheckoutResult extends React.Component<CheckoutResultProps, CheckoutResultState>{
+    constructor(props: CheckoutResultProps) {
+        super(props);
+        this.returnToMenu = this.returnToMenu.bind(this)
+        this.returnToCart = this.returnToCart.bind(this);
     }
 
-    return(
-        <div className={"checkoutResult"}>
-            <img src={require("../img/success.gif")} alt={"succes"} />
-            <h3> Payment successful </h3>
-            <button onClick={returnToMenu}> Return to shop </button>
-        </div>
-    )
+    state: CheckoutResultState = {
+        isCompleted: false,
+        isSuccessful: false
+    }
+
+    returnToMenu(){
+        this.props.onCartClear();
+        window.location.replace("/");
+    }
+
+    returnToCart(){
+        window.location.replace("/myCart");
+    }
+
+    componentDidMount() {
+        MakeOrder().then(result => {
+            this.setState({
+                isCompleted: true,
+                isSuccessful: result.isSuccess
+            })
+        })
+    }
+
+    render(){
+        if (!this.state.isCompleted){
+            return (
+                <div className={"checkoutResult"}>
+                    <Loader />
+                </div>
+            )
+        }
+        if (this.state.isSuccessful) {
+            return (
+                <div className={"checkoutResult"}>
+                    <img src={require("../img/success.gif")} alt={"succes"}/>
+                    <h3> Payment successful </h3>
+                    <button onClick={this.returnToMenu}> Return to shop</button>
+                </div>
+            )
+        }
+        else{
+            return (
+                <div className={"checkoutResult"}>
+                    <img src={require("../img/fail.png")} alt={"fail"}/>
+                    <h3> Payment payment failed </h3>
+                    <button onClick={this.returnToCart}> Return to cart </button>
+                </div>
+            )
+        }
+    }
+
 }

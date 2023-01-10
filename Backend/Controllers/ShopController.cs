@@ -1,8 +1,8 @@
 using Backend.Services.Interfaces;
 using Backend.Utils;
 using DataRepository.Entities;
-using DataRepository.Enums;
 using DataRepository.Repositories.Interfaces;
+using Dtos.Enums;
 using Dtos.Requests;
 using Dtos.Results;
 using Microsoft.AspNetCore.Mvc;

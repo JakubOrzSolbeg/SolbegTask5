@@ -1,5 +1,5 @@
 import React, {useRef} from "react";
-import CheckoutResult from "../components/CheckoutResult";
+import {CheckoutResult} from "../components/CheckoutResult";
 import LoginForm from "../components/LoginForm";
 import Popup from "reactjs-popup";
 

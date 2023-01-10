@@ -2,7 +2,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Backend.Services.Interfaces;
 using DataRepository.Entities;
-using DataRepository.Enums;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Backend.Services.Implementations;

@@ -1,4 +1,4 @@
-namespace DataRepository.Enums;
+namespace Dtos.Enums;
 
 [Flags]
 public enum UserType : byte
