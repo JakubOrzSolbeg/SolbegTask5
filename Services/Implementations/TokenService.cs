@@ -1,10 +1,11 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using Backend.Services.Interfaces;
 using DataRepository.Entities;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Services.Interfaces;
 
-namespace Backend.Services.Implementations;
+namespace Services.Implementations;
 
 public class TokenService : ITokenService
 {
@@ -14,7 +15,7 @@ public class TokenService : ITokenService
     public readonly TokenValidationParameters ValidationParameters;
     public TokenService(IConfiguration configuration)
     {
-        _jwtkey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(configuration["jwtkey"]));
+        _jwtkey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes((string)configuration["jwtkey"]));
         ValidationParameters = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,
@@ -47,24 +48,24 @@ public class TokenService : ITokenService
         var jwtSecurityToken = new JwtSecurityToken(token);
         return GetUserId(jwtSecurityToken);
     }
-
-    public int GetUserId(HttpContext context)
+    
+    public int GetUserId(HttpContent context)
     {
-        var tokenFromRequest = context.Request.Headers["Authorization"];
-        if (tokenFromRequest.Count > 0)
+        var tokenFromRequest = context.Headers.GetValues("Authorization").FirstOrDefault();
+        if (!string.IsNullOrEmpty(tokenFromRequest))
         {
-            var token = tokenFromRequest[0].Split(" ")[1];
-            return GetUserId(token);
+            var token = tokenFromRequest.Split(" ")[1];
+            return GetUserId((string)token);
         }
         else
         {
             return -1;
         }
     }
-    
+
     public int GetUserId(JwtSecurityToken token)
     {
-        var userId = token.Claims.FirstOrDefault(claim => claim.Type == "userId")?.Value;
+        var userId = Enumerable.FirstOrDefault<Claim>(token.Claims, claim => claim.Type == "userId")?.Value;
         if (string.IsNullOrEmpty(userId))
         {
             throw new ArgumentNullException(nameof(token));

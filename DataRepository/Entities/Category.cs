@@ -4,16 +4,16 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DataRepository.Entities;
 
-public class Brand : BaseEntity
+public class Category : BaseEntity
 {
     public string Name { get; set; } = null!;
-
-    public virtual ICollection<Product> Products { get; set; } = null!;
+    
+    public virtual ICollection<Product> Products { get; set; }
 }
 
-public class BrandConfiguration : BaseEntityTypeConfiguration<Brand>
+public class CategoryConfiguration : BaseEntityTypeConfiguration<Category>
 {
-    public override void Configure(EntityTypeBuilder<Brand> builder)
+    public override void Configure(EntityTypeBuilder<Category> builder)
     {
         base.Configure(builder);
         builder.Property(p => p.Name).HasDefaultValue("Unknown");

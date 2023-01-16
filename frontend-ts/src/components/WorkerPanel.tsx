@@ -4,6 +4,7 @@ import PendingOrderOverviewType from "../models/PendingOrderOverview";
 import Loader from "./Loader";
 import PendingOrderOverview from "./PendingOrderOverview";
 import VerifyOrder from "../apiRequests/verifyOrder";
+import {ProductForm} from "./Forms/ProductForm";
 
 type WorkPanelState = {
     isLoaded: boolean
@@ -67,6 +68,8 @@ export class WorkerPanel extends React.Component<any, WorkPanelState>{
                             );
                         })}
                     </div>
+                    <h2> Add new product </h2>
+                    <ProductForm />
                 </div>
             )
         }

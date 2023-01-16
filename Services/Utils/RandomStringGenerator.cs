@@ -1,6 +1,6 @@
 using System.Text;
 
-namespace Backend.Utils;
+namespace Services.Utils;
 
 public class RandomStringGenerator
 {

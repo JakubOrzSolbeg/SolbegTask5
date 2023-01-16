@@ -1,10 +1,10 @@
-using Backend.Services.Interfaces;
 using Backend.Utils;
 using Dtos.Enums;
 using Dtos.Requests;
 using Dtos.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Services.Interfaces;
 
 namespace Backend.Controllers;
 
@@ -14,8 +14,8 @@ public class AccountsController : ControllerBase
 {
 
     private readonly IAccountService _accountService;
-    private readonly ITokenService _tokenService;
-    public AccountsController(IAccountService accountService, ITokenService tokenService)
+    private readonly TokenUtil _tokenService;
+    public AccountsController(IAccountService accountService, TokenUtil tokenService)
     {
         _accountService = accountService;
         _tokenService = tokenService;

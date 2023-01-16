@@ -1,5 +1,5 @@
 using DataRepository.Entities.Base;
-using DataRepository.Enums;
+using Dtos.Enums;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DataRepository.Entities;
@@ -10,6 +10,8 @@ public class User : BaseEntity
     public string Passhash { get; set; } = null!;
     public string Salt { get; set; } = null!;
     public UserType UserType { get; set; } = UserType.User;
+    
+    public virtual ICollection<Order> Orders { get; set; }
 }
 
 public class UserConfiguration : BaseEntityTypeConfiguration<User>

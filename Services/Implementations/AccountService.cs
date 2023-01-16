@@ -1,12 +1,12 @@
-using Backend.Services.Interfaces;
-using Backend.Utils;
 using DataRepository.Entities;
 using DataRepository.Repositories.Interfaces;
 using Dtos.Enums;
 using Dtos.Requests;
 using Dtos.Results;
+using Services.Interfaces;
+using Services.Utils;
 
-namespace Backend.Services.Implementations;
+namespace Services.Implementations;
 
 public class AccountService : IAccountService
 {

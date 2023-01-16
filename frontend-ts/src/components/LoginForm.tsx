@@ -65,7 +65,6 @@ export default class LoginForm extends React.Component<LoginFormProps, LoginForm
             ...(this.state),
             [evt.target.name]: value
         });
-
     }
 
     render(){

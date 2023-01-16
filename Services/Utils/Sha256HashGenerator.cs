@@ -1,7 +1,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Backend.Utils;
+namespace Services.Utils;
 
 public class Sha256HashGenerator
 {

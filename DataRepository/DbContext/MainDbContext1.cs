@@ -1,5 +1,5 @@
 using DataRepository.Entities;
-using DataRepository.Enums;
+using Dtos.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -17,6 +17,9 @@ public class MainDbContext1 : Microsoft.EntityFrameworkCore.DbContext
     public DbSet<User> Users { get; set; } = null!;
     public DbSet<Brand> Brands { get; set; } = null!;
     public DbSet<Product> Products { get; set; } = null!;
+    public DbSet<Category> Categories { get; set; } = null!;
+    public DbSet<Order> Orders { get; set; } = null!;
+    public DbSet<OrderProduct> OrderProducts { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -24,6 +27,9 @@ public class MainDbContext1 : Microsoft.EntityFrameworkCore.DbContext
         modelBuilder.ApplyConfiguration(new UserConfiguration());
         modelBuilder.ApplyConfiguration(new ProductConfiguration());
         modelBuilder.ApplyConfiguration(new BrandConfiguration());
+        modelBuilder.ApplyConfiguration(new OrderConfiguration());
+        modelBuilder.ApplyConfiguration(new CategoryConfiguration());
+        modelBuilder.ApplyConfiguration(new OrderProductConfiguration());
 
         modelBuilder.Entity<User>().HasData(
             new User()
@@ -36,6 +42,50 @@ public class MainDbContext1 : Microsoft.EntityFrameworkCore.DbContext
             }
             // password zaq12wsx
         );
+
+        modelBuilder.Entity<Category>().HasData(
+            new Category()
+            {
+                Id = 1,
+                Name = "Laptop"
+            },
+            new Category()
+            {
+                Id = 2,
+                Name = "Smartphone"
+            }
+        );
+
+        modelBuilder.Entity<Brand>().HasData(
+            new Brand()
+            {
+                Id = 1,
+                Name = "Lenovo"
+            },
+            new Brand()
+            {
+                Id = 2,
+                Name = "Samsung"
+            });
+
+        modelBuilder.Entity<Product>().HasData(
+            new Product()
+            {
+                Name = "Samgung A20",
+                Description = "Good looking smartphone",
+                BrandId = 2,
+                CategoryId = 2,
+                PhotoUrl = "dadasdsdasd"
+            },
+            new Product()
+            {
+                Name = "Samgung Galaxy 4",
+                Description = "Model brand phone",
+                BrandId = 2,
+                CategoryId = 2,
+                PhotoUrl = "idknlinknoeworkinda"
+            });
+
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

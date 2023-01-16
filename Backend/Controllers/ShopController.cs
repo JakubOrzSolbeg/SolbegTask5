@@ -1,4 +1,3 @@
-using Backend.Services.Interfaces;
 using Backend.Utils;
 using DataRepository.Entities;
 using DataRepository.Repositories.Interfaces;
@@ -6,6 +5,7 @@ using Dtos.Enums;
 using Dtos.Requests;
 using Dtos.Results;
 using Microsoft.AspNetCore.Mvc;
+using Services.Interfaces;
 
 namespace Backend.Controllers;
 
@@ -23,6 +23,12 @@ public class ShopController : ControllerBase
     public async Task<ActionResult<ApiResultBase<List<ProductOverview>>>> Products()
     {
         return await _shopService.GetAllProducts();
+    }
+
+    [HttpPost]
+    public async Task<ActionResult<ApiResultBase<List<ProductOverview>>>> Products(ProductSearchParams searchParams)
+    {
+        return await _shopService.SearchProducts(searchParams);
     }
 
     [HttpPost]
@@ -49,6 +55,31 @@ public class ShopController : ControllerBase
     public async Task<ActionResult<ApiResultBase<bool>>> AddBrand(string brandName)
     {
         return await _shopService.AddBrand(brandName);
+    }
+
+    [HttpPost]
+    [CustomAuthorize(UserType.Worker)]
+    public async Task<ActionResult<ApiResultBase<bool>>> AddCategory(string categoryName)
+    {
+        return await _shopService.AddCategory(categoryName);
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<ApiResultBase<List<CategoryDetail>>>> Categories()
+    {
+        return await _shopService.GetCategories();
+    }
+
+    [HttpGet]
+    public async Task<ApiResultBase<List<BrandDetail>>> Brands()
+    {
+        return await _shopService.GetBrands();
+    }
+
+    [HttpGet]
+    public async Task<ApiResultBase<ShopDetails>> ShopDetails()
+    {
+        return await _shopService.GetShopDetails();
     }
 
     [HttpDelete]

@@ -1,11 +1,10 @@
-
-using Backend.Services.Interfaces;
 using Backend.Utils;
 using Dtos.Requests;
 using Dtos.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Dtos.Enums;
+using Services.Interfaces;
 
 namespace Backend.Controllers;
 
@@ -13,9 +12,9 @@ namespace Backend.Controllers;
 [Route("/[controller]/[action]")]
 public class OrdersController : ControllerBase
 {
-    private readonly ITokenService _tokenService;
+    private readonly TokenUtil _tokenService;
     private readonly IShopService _shopService;
-    public OrdersController(ITokenService tokenService, IShopService shopService)
+    public OrdersController(TokenUtil tokenService, IShopService shopService)
     {
         _tokenService = tokenService;
         _shopService = shopService;

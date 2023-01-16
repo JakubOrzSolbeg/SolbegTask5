@@ -1,26 +1,25 @@
-using Backend.Services.Implementations;
-using Backend.Services.Interfaces;
+using Backend.Utils;
 using DataRepository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Services;
 using Swashbuckle.AspNetCore.Filters;
 
 var myCorsPolicyName = "corspolicy";
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-// Add DataRepository
+// Add DataRepository and Services form Class Library
 
 builder.Services.AddDataRepository();
+builder.Services.AddServices();
 
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddSingleton<ITokenService, TokenService>();
-builder.Services.AddScoped<IAccountService, AccountService>();
-builder.Services.AddScoped<IShopService, ShopService>();
+builder.Services.AddSingleton<TokenUtil>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {

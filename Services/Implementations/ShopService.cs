@@ -1,26 +1,29 @@
-using Backend.Services.Interfaces;
 using DataRepository.Entities;
 using DataRepository.Repositories.Interfaces;
 using Dtos.Enums;
 using Dtos.Requests;
 using Dtos.Results;
+using Services.Interfaces;
 
-namespace Backend.Services.Implementations;
+namespace Services.Implementations;
 
 public class ShopService : IShopService
 {
     private readonly ExtendedRepository<Product> _productRepository;
-    private readonly Repository<Brand> _brandRepository;
+    private readonly ExtendedRepository<Brand> _brandRepository;
     private readonly NestedRepository<Order> _orderRepository;
+    private readonly ExtendedRepository<Category> _categoryRepository;
     public ShopService(
         ExtendedRepository<Product> productRepository, 
-        Repository<Brand> brandRepository, 
-        NestedRepository<Order> orderRepository
+        ExtendedRepository<Brand> brandRepository, 
+        NestedRepository<Order> orderRepository,
+        ExtendedRepository<Category> categoryRepository
         )
     {
         _brandRepository = brandRepository;
         _productRepository = productRepository;
         _orderRepository = orderRepository;
+        _categoryRepository = categoryRepository;
     }
     
     public async Task<ApiResultBase<List<ProductOverview>>> GetAllProducts()
@@ -36,6 +39,31 @@ public class ShopService : IShopService
         {
             Body = result,
             IsSuccess = true
+        };
+    }
+
+    public async Task<ApiResultBase<List<ProductOverview>>> SearchProducts(ProductSearchParams searchParams)
+    {
+        var result = (await _productRepository.GetAllByPredicate(product =>
+                product.Cost <= searchParams.MaxPrice &&
+                product.Cost >= searchParams.MinPrice &&
+                (searchParams.Categories.Count == 0 || searchParams.Categories.Contains(product.CategoryId)) &&
+                (searchParams.Brands.Count == 0 || searchParams.Brands.Contains(product.BrandId)) &&
+                (string.IsNullOrEmpty(searchParams.Name) ||
+                 product.Name.ToLower().StartsWith(searchParams.Name!.ToLower()))
+            ))
+            .Select(product => new ProductOverview()
+            {
+                ProductName = product.Name,
+                Price = product.Cost,
+                PhotoUrl = product.PhotoUrl,
+                ProductId = product.Id
+            })
+            .ToList();
+        return new ApiResultBase<List<ProductOverview>>()
+        {
+            IsSuccess = true,
+            Body = result
         };
     }
 
@@ -89,23 +117,29 @@ public class ShopService : IShopService
 
     public async Task<ApiResultBase<bool>> AddProduct(NewProductCredentials newProductCredentials)
     {
-        var brand = await _brandRepository.GetById(newProductCredentials.BrandId);
-
-        if (brand == null)
+        var brand = 
+            await _brandRepository.GetByPredicate(brand => 
+                brand.Name.Equals(newProductCredentials.Brand)) ??
+            await _brandRepository.Add(new Brand()
         {
-            return new ApiResultBase<bool>()
+            Name = newProductCredentials.Brand
+        });
+        
+        var category =
+            await _categoryRepository.GetByPredicate(category =>
+                category.Name.Equals(newProductCredentials.Category)) ??
+            await _categoryRepository.Add(new Category()
             {
-                IsSuccess = false,
-                Errors = "Brand does not exists"
-            };
-        }
+                Name = newProductCredentials.Category
+            });
         
         var newProductEntity = new Product()
         {
             Name = newProductCredentials.ProductName,
             Description = newProductCredentials.ProductDetail,
             Cost = newProductCredentials.Price,
-            BrandId = newProductCredentials.BrandId,
+            BrandId = brand.Id,
+            CategoryId = category.Id,
             PhotoUrl = newProductCredentials.PhotoUrl
         };
         await _productRepository.Add(newProductEntity);
@@ -123,7 +157,69 @@ public class ShopService : IShopService
         });
         return new ApiResultBase<bool>()
         {
-            IsSuccess = true
+            IsSuccess = true,
+            Body = true
+        };
+    }
+
+    public async Task<ApiResultBase<bool>> AddCategory(string categoryName)
+    {
+        await _categoryRepository.Add(new Category()
+        {
+            Name = categoryName
+        });
+        return new ApiResultBase<bool>()
+        {
+            IsSuccess = true,
+            Body = true
+        };
+    }
+
+    public async Task<ApiResultBase<List<CategoryDetail>>> GetCategories()
+    {
+        var result = (await _categoryRepository.GetAll()).Select(c => new CategoryDetail()
+        {
+            CategoryName = c.Name,
+            CategoryId = c.Id
+        }).ToList();
+        return new ApiResultBase<List<CategoryDetail>>()
+        {
+            IsSuccess = true,
+            Body = result
+        };
+    }
+
+    public async Task<ApiResultBase<List<BrandDetail>>> GetBrands()
+    {
+        return new ApiResultBase<List<BrandDetail>>()
+        {
+            IsSuccess = true,
+            Body = (await _brandRepository.GetAll()).Select(b => new BrandDetail()
+            {
+                BrandId = b.Id,
+                BrandName = b.Name
+            }).ToList()
+        };
+    }
+
+    public async Task<ApiResultBase<ShopDetails>> GetShopDetails()
+    {
+        return new ApiResultBase<ShopDetails>()
+        {
+            IsSuccess = true,
+            Body = new ShopDetails()
+            {
+                Categories = (await _categoryRepository.GetAll()).Select(c => new CategoryDetail()
+                {
+                    CategoryName = c.Name,
+                    CategoryId = c.Id
+                }).ToList(),
+                Brands = (await _brandRepository.GetAll()).Select(b => new BrandDetail()
+                {
+                    BrandId = b.Id,
+                    BrandName = b.Name
+                }).ToList()
+            }
         };
     }
 
@@ -307,7 +403,7 @@ public class ShopService : IShopService
             {
                 UserId = order.UserId,
                 OrderId = order.Id,
-                ProductNames = order.OrderProducts.Select(p => p.Product.Name).ToList()
+                ProductNames = Enumerable.ToList<string>(order.OrderProducts.Select(p => p.Product.Name))
             });
 
         var apiResult = new ApiResultBase<List<PendingOrderInfo>>()

@@ -6,5 +6,6 @@ public class NewProductCredentials
     public string ProductDetail { get; set; } = String.Empty;
     public double Price { get; set; }
     public string PhotoUrl { get; set; } = String.Empty;
-    public int BrandId { get; set; }
+    public string Brand { get; set; } = "Unknown";
+    public string Category { get; set; } = "Unknown";
 }

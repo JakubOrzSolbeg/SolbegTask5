@@ -1,7 +1,7 @@
 using Dtos.Requests;
 using Dtos.Results;
 
-namespace Backend.Services.Interfaces;
+namespace Services.Interfaces;
 
 public interface IAccountService
 {

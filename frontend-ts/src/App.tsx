@@ -71,6 +71,7 @@ export class App extends React.Component<any, ShopAppState> {
 
     onLogout(){
         this.setState({isLogged: false, authToken: ""})
+        window.location.replace("/");
     }
 
     render(){
