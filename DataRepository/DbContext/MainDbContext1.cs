@@ -71,6 +71,7 @@ public class MainDbContext1 : Microsoft.EntityFrameworkCore.DbContext
         modelBuilder.Entity<Product>().HasData(
             new Product()
             {
+                Id = 1,
                 Name = "Samgung A20",
                 Description = "Good looking smartphone",
                 BrandId = 2,
@@ -79,6 +80,7 @@ public class MainDbContext1 : Microsoft.EntityFrameworkCore.DbContext
             },
             new Product()
             {
+                Id = 2,
                 Name = "Samgung Galaxy 4",
                 Description = "Model brand phone",
                 BrandId = 2,
