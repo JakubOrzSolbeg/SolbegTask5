@@ -1,4 +1,5 @@
 import React from "react";
+import MakeApiCall from "../../apiRequests/MainApiRequester";
 
 type ProductFormType = {
     productName: string
@@ -36,12 +37,15 @@ export class ProductForm extends React.Component<any, ProductFormType>{
 
     handleSubmit(event: any){
         console.log(this.state)
-        event.preventDefault()
+        MakeApiCall<ProductFormType, boolean>("/Shop/AddProduct", "POST", true, this.state)
+            .then(result => console.log(result))
+        event.preventDefault();
     }
 
     render() {
         return (
             <form className={"product-form"} onSubmit={this.handleSubmit}>
+
                 <label>
                     Product name:
                     <input type={"text"} name={"productName"} value={this.state.productName} required={true} onChange={this.handleChange}/>
@@ -66,7 +70,7 @@ export class ProductForm extends React.Component<any, ProductFormType>{
                     Photo url:
                     <input type={"text"} name={"photoUrl"} value={this.state.photoUrl} required={true} onChange={this.handleChange}/>
                 </label>
-                <input type={"submit"} onSubmit={this.handleSubmit}/>
+                <button type={"submit"} onSubmit={this.handleSubmit}> Add product </button>
             </form>
         )
     }

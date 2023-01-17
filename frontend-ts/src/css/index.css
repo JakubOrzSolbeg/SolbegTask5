@@ -85,9 +85,17 @@ main{
 }
 
 .products{
+  grid-area: 2 / 2 / -1 / -1;
   display: flex;
   flex-wrap: wrap;
+  overflow-y: scroll;
+  justify-content: start;
   padding: 10px;
+}
+
+.search-box{
+  margin: 10px;
+  grid-area: 2 / 1 / -2 / 1;
 }
 
 .productCard, .pending-order{
@@ -230,7 +238,7 @@ main{
   height: 100%;
 }
 
-.barButton > a, button, input[type=submit], input[type=button]{
+.barButton > a, button, input[type=submit], input[type=button], select{
   background: radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%),
   radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%);
   border: #2a0156 solid 1px;
@@ -286,8 +294,71 @@ input[type=submit]:disabled, input[type=submit]:disabled:hover{
   min-width: 300px;
 }
 
-h1, h2, h3{
+h1, h2, h3, form{
   color: #cea705;
+}
+
+.product-form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+  padding: 5px;
+  font-size: 1.3em;
+}
+
+
+.product-form > label {
+  display: flex;
+  justify-content: space-between;
+  gap: 4px;
+  width: 50%;
+}
+
+.pagination-controll{
+  font-size: 1.3em;
+  margin: 10px;
+  gap: 3px;
+  padding: 2px;
+  border-radius: 5px;
+  /*background: rgba(0.3, 0.3, 0.3, 0.1);*/
+  color: #9f7928;
+  display: flex;
+  height: 30px;
+  justify-content: center;
+}
+
+.pagination-controll.upper{
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.pagination-controll.bottom{
+  grid-column: 3;
+  grid-row: 3;
+  align-self: end;
+}
+
+.shop-main-page{
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  display: grid;
+  grid-template-columns: 10% 30% 20% 30% 10%;
+  grid-template-rows: 5% 90% 5%;
+}
+
+
+.product-form > label > input{
+  font-size: 1.3em;
+}
+
+.product-form > button {
+  width: 130px;
+  height: 50px;
 }
 
 .order-list{
@@ -304,6 +375,10 @@ h1, h2, h3{
 
 .orderOverview:hover{
   filter: brightness(105%);
+}
+
+.success-message{
+  color: #2c9f28;
 }
 
 .orderOverview.Pending{
