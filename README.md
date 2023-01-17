@@ -2,8 +2,7 @@
 
 Online (electronics) shop
 
-<a href="https://ibb.co/nwg2RL6"><img src="https://i.ibb.co/wd0HYzB/Screenshot-from-2022-12-22-14-11-48.png" alt="Screenshot-from-2022-12-22-14-11-48" border="0"></a>
-
+<a href="https://ibb.co/864Knbq"><img src="https://i.ibb.co/Chs1p6g/Screenshot-from-2023-01-18-00-17-21.png" alt="Screenshot-from-2023-01-18-00-17-21" border="0"></a>
 ## About
 Online shop, build using asp .net for BackEnd, MsSql Server for database and React.tsx v6 for Frontend.
 For this Task I have decided to try using TypeScript.
@@ -13,22 +12,14 @@ For this Task I have decided to try using TypeScript.
 - Showing product list for all even not logged users
 - Showing product details after clicking on product overview card
 - Adding / Removing product from card, clearing shopping cart
-- Saving login, shop cart state even afer reloading page 
-- Login form
+- Saving login, shop cart state even after reloading page 
+- Login and Register form
 - Role based authentication (User, Worker, Admin)
-- Editing product list (only for Worker+) implemented only on server side yet
-
-### Features to be added
-
-- Search bar 
-- Brand filter
+- Search manu
 - Pagination
-- Worker panel (front end)
-- Adding product panel (for worker)
-- Registration panel
+- Worker panel, can verify and reject orders, add new products
 - Improved checkout panel
-- More detailed userPanel
-- Icons
+
 
 ### Configuration and deployment
 
@@ -61,6 +52,8 @@ In order for easier data parsing every api response from server is generic objec
 
 }
 
+#### Legacy code
+Some componenets use older ApiRequests, new components use Universal Api request method
 
 #### External libraries:
 
