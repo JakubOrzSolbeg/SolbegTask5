@@ -1,10 +1,10 @@
 import React from "react";
 import GetPendingOrders from "../apiRequests/getPendingOrders";
 import PendingOrderOverviewType from "../models/PendingOrderOverview";
-import Loader from "./Loader";
-import PendingOrderOverview from "./PendingOrderOverview";
+import Loader from "../components/Shared/Loader";
+import PendingOrderOverview from "../components/Cards/PendingOrderOverview";
 import VerifyOrder from "../apiRequests/verifyOrder";
-import {ProductForm} from "./Forms/ProductForm";
+import {ProductForm} from "../components/Forms/ProductForm";
 
 type WorkPanelState = {
     isLoaded: boolean

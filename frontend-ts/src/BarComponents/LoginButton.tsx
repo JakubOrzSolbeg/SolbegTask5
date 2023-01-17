@@ -1,6 +1,6 @@
 import React, {useRef} from "react";
-import LoginForm from "../components/LoginForm";
 import Popup from "reactjs-popup";
+import {LoginCard} from "../components/Cards/LoginCard";
 
 type LoginButtonProps = {
     onSuccesfulLogin: (token: string) => void
@@ -20,7 +20,7 @@ export default function LoginButton(props: LoginButtonProps){
         return(
                 <Popup ref={ref} open={false} trigger={button} modal>
                     <div className={"modal"}>
-                        <LoginForm onLogin={handleLogin}/>
+                        <LoginCard onLogin={handleLogin}/>
                     </div>
                 </Popup>
         )

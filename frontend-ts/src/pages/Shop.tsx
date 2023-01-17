@@ -1,11 +1,13 @@
 import React from "react";
 import ProductOverview from "../models/ProductOverview";
 import GetProductList from "../apiRequests/getProductList";
-import Loader from "./Loader";
-import ProductCard from "./ProductCard";
+import Loader from "../components/Shared/Loader";
+import ProductCard from "../components/Cards/ProductCard";
 import ShopAppState from "../models/AppState";
-import {PaginationController} from "./paginationController";
-import {SearchForm, SearchFormParams} from "./Forms/SearchForm";
+import {PaginationController} from "../components/Forms/paginationController";
+import {SearchForm, SearchFormParams} from "../components/Forms/SearchForm";
+import ApiResult from "../models/ApiResultBase";
+import MakeApiCall from "../apiRequests/MainApiRequester";
 
 type ShopProps = {
     appState: ShopAppState,
@@ -55,31 +57,29 @@ class Shop extends React.Component<ShopProps, ShopState> {
     }
 
     searchProducts(searchParams: SearchFormParams){
-        console.log("Shop initialise search params");
-        console.log(searchParams);
+        MakeApiCall<SearchFormParams, ProductOverview[]>(
+            "/Shop/Products", 'POST', false, searchParams
+        ).then(result => {
+            this.loadData(result)
+        })
+
     }
 
-    loadData(){
-        GetProductList().then(result => {
-            if (!result.isSuccess){
-                this.setState({isLoaded : true, loadError: result.errors})
-            }
-            else{
-                console.log(8 / 5)
-                console.log(( (result.body?.length??0) / this.state.itemsPerPage))
-
+    loadData(result: ApiResult<ProductOverview[]>){
+        if (!result.isSuccess){
+            this.setState({isLoaded : true, loadError: result.errors})
+        }
+        else{
                 this.setState({
-                    isLoaded: true,
-                    products: result.body??[],
-                    maxPage: Math.ceil(((result.body?.length??1) / this.state.itemsPerPage))
-                })
-            }
-        });
-
+                isLoaded: true,
+                products: result.body??[],
+                maxPage: Math.ceil(((result.body?.length??1) / this.state.itemsPerPage))
+            })
+        }
     }
 
     componentDidMount() {
-        this.loadData();
+        GetProductList().then(result => this.loadData(result));
     }
 
     render() {

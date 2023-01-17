@@ -1,7 +1,7 @@
 import React, {useRef} from "react";
-import {CheckoutResult} from "../components/CheckoutResult";
-import LoginForm from "../components/LoginForm";
+import {CheckoutResult} from "../components/Cards/CheckoutResult";
 import Popup from "reactjs-popup";
+import {LoginCard} from "../components/Cards/LoginCard";
 
 type CheckoutButtonProps = {
     isLoggedIn: boolean
@@ -17,7 +17,7 @@ export default function CheckoutButton(props: CheckoutButtonProps){
         props.onLogin(token);
     }
 
-    const popUpResult = (props.isLoggedIn)? <CheckoutResult onCartClear={props.onCartClear} /> : <LoginForm onLogin={handleLogin} />
+    const popUpResult = (props.isLoggedIn)? <CheckoutResult onCartClear={props.onCartClear} /> : <LoginCard onLogin={handleLogin} />
     const ref = useRef(null);
 
     return(

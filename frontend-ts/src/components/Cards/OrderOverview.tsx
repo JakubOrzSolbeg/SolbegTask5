@@ -1,5 +1,5 @@
 import React from "react";
-import OrderOverview from "../models/OrderOverview";
+import OrderOverview from "../../models/OrderOverview";
 
 export default function OrderOverviewCart(props: OrderOverview){
     let stateName: { [key: number]: string} = {

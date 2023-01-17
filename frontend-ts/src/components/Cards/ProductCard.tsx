@@ -1,8 +1,8 @@
 import React, {useRef} from "react";
-import ProductOverview from "../models/ProductOverview";
+import ProductOverview from "../../models/ProductOverview";
 import Popup from "reactjs-popup";
 import {ProductDetailedCard} from "./ProductDetailedCard";
-import ConvertCurrency from "../utils/convertCurrency";
+import ConvertCurrency from "../../utils/convertCurrency";
 
 type ProductCardTypes = {
     productAlreadyInCart: boolean,
@@ -23,7 +23,7 @@ export default function ProductCard(props: ProductCardTypes){
         props.onProductMoveToCart(product.productId);
     }
 
-    const imgPlaceholder = require("../img/placeholder-image.png")
+    const imgPlaceholder = require("../../img/placeholder-image.png")
     const productCart = <div className={"productCard"}>
 
                             <img

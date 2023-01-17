@@ -1,5 +1,4 @@
 import React from "react";
-import exp from "constants";
 
 type PaginationProps = {
     subclass: string
@@ -17,16 +16,12 @@ type PaginationState = {
 }
 
 export class PaginationController extends React.Component<PaginationProps, PaginationState>{
-    constructor(props: PaginationProps) {
-        super(props);
-    }
 
     state: PaginationState = {
         currentPage: 1,
         itemsPerPage: 5,
         maxPage: 10
     }
-
 
     render() {
         return (

@@ -1,5 +1,5 @@
 import React from "react";
-import Login from "../apiRequests/login";
+import Login from "../../apiRequests/login";
 
 type LoginFormProps = {
     onLogin: (arg0: string) => void
@@ -19,7 +19,6 @@ export default class LoginForm extends React.Component<LoginFormProps, LoginForm
 
         this.handle_submit = this.handle_submit.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.handle_signup = this.handle_signup.bind(this);
     }
     state: LoginFormState = {
         login: "",
@@ -39,11 +38,6 @@ export default class LoginForm extends React.Component<LoginFormProps, LoginForm
                 this.props.onLogin(result.body??"");
             }
         })
-    }
-
-    handle_signup(event: any){
-        localStorage.setItem("kawa", this.state.password);
-        console.warn("Handle signup not yet implemented");
     }
 
     componentDidUpdate(prevProps:any, prevState:LoginFormState) {
@@ -79,7 +73,6 @@ export default class LoginForm extends React.Component<LoginFormProps, LoginForm
                        required={true} value={this.state.password} onChange={this.handleChange}/>
                 <span id={"form-errors"}>{this.state.errors}</span>
                 <input className={"primary-form-button"} type={"submit"} value={"Log in"} disabled={!this.state.canBeSubmitted}/>
-                <input className={"secondery-form-button"} type={"button"} value={"Don't have an account?"} onClick={this.handle_signup}/>
             </form>
         )
     }

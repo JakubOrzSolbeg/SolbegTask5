@@ -1,7 +1,7 @@
 import React from "react";
-import LoginButton from "../BarComponents/LoginButton";
-import ShopAppState from "../models/AppState";
-import CartButton from "../BarComponents/CartButton";
+import LoginButton from "../../BarComponents/LoginButton";
+import ShopAppState from "../../models/AppState";
+import CartButton from "../../BarComponents/CartButton";
 import jwt_decode from "jwt-decode";
 
 type HeaderProps = {

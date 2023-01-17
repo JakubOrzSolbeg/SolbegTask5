@@ -1,10 +1,10 @@
 import React from "react";
-import ShopAppState from "../models/AppState";
-import CheckoutButton from "../BarComponents/CheckoutButton";
-import ProductOverview from "../models/ProductOverview";
-import GetProductsInCart from "../apiRequests/getProductsInCart";
-import Loader from "./Loader";
-import ProductCard from "./ProductCard";
+import ShopAppState from "../../models/AppState";
+import CheckoutButton from "../../BarComponents/CheckoutButton";
+import ProductOverview from "../../models/ProductOverview";
+import GetProductsInCart from "../../apiRequests/getProductsInCart";
+import Loader from "../Shared/Loader";
+import ProductCard from "../Cards/ProductCard";
 
 type ShopCardListProps = {
     shopAppState: ShopAppState

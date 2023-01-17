@@ -1,8 +1,8 @@
 import React from "react";
 import OrderOverview from "../models/OrderOverview";
-import Loader from "./Loader";
+import Loader from "../components/Shared/Loader";
 import GetOrderList from "../apiRequests/getOrderList";
-import OrderOverviewCart from "./OrderOverview";
+import OrderOverviewCart from "../components/Cards/OrderOverview";
 
 type OrderListState = {
     isLoaded: boolean

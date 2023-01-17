@@ -64,13 +64,29 @@ export class SearchForm extends React.Component<SearchFormProps, SearchFormState
                 this.setState({searchParams: {...this.state.searchParams, maxPrice: newMaxValue } })
                 break;
             case "brand":
-                console.log("Brand");
+                let brandSet: Set<number> = new Set(this.state.searchParams.brands);
+                if (evt.target.checked){
+                    brandSet.add(Number(evt.target.value))
+                }
+                else{
+                    brandSet.delete(Number(evt.target.value))
+                }
+                this.setState({searchParams: {...this.state.searchParams, brands: Array.from(brandSet)} })
                 break;
             case "category":
-                console.log("Category");
+                let categorySet: Set<number> = new Set(this.state.searchParams.categories);
+                if (evt.target.checked){
+                    categorySet.add(Number(evt.target.value))
+                }
+                else{
+                    categorySet.delete(Number(evt.target.value))
+                }
+                this.setState({searchParams: {...this.state.searchParams, categories: Array.from(categorySet)} })
+                break;
+            case "name":
+                this.setState({searchParams: {...this.state.searchParams, name: evt.target.value } })
                 break;
             default:
-                console.log("unknown");
                 break;
         }
     }
@@ -83,6 +99,7 @@ export class SearchForm extends React.Component<SearchFormProps, SearchFormState
     render() {
         return (
             <div className={"search-box"}>
+                <h3> Search </h3>
                 <form onSubmit={this.handleSubmit}>
                     <label> Mix price: </label>
                     <input
@@ -101,7 +118,7 @@ export class SearchForm extends React.Component<SearchFormProps, SearchFormState
                         value={this.state.searchParams.maxPrice === undefined ? '' : this.state.searchParams.maxPrice.toString()}
                         onChange={this.handleChange}
                     />
-                    <label> Category: </label>
+                    <b> Category: </b>
                     {this.state.shopDetails?.categories.map(category => {
                         return (
                             <label key={category.categoryId}>
@@ -111,10 +128,10 @@ export class SearchForm extends React.Component<SearchFormProps, SearchFormState
                                 type={"checkbox"}
                                 id={`category-${category.categoryId}`}
                                 name={'category'}
-                                value={category.categoryName}/>
+                                value={category.categoryId}/>
                             </label>)
                     })}
-                    <label> Brand: </label>
+                    <b> Brand: </b>
                     {this.state.shopDetails?.brands.map(brand => {
                         return (
                             <label key={brand.brandId}>
@@ -124,9 +141,11 @@ export class SearchForm extends React.Component<SearchFormProps, SearchFormState
                                     type={"checkbox"}
                                     id={`brand-${brand.brandId}`}
                                     name={'brand'}
-                                    value={brand.brandName}/>
+                                    value={brand.brandId}/>
                             </label>)
                     })}
+                    <b> Name: </b>
+                    <input type={"text"} name={"name"} value={this.state.searchParams.name} onChange={this.handleChange}/>
 
                     <input type={"submit"} value={"Search"}/>
                 </form>

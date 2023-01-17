@@ -1,6 +1,6 @@
 import React from "react";
-import MakeOrder from "../apiRequests/makeOrder";
-import Loader from "./Loader";
+import MakeOrder from "../../apiRequests/makeOrder";
+import Loader from "../Shared/Loader";
 
 type CheckoutResultProps = {
     onCartClear: () => void
@@ -52,7 +52,7 @@ export class CheckoutResult extends React.Component<CheckoutResultProps, Checkou
         if (this.state.isSuccessful) {
             return (
                 <div className={"checkoutResult"}>
-                    <img src={require("../img/success.gif")} alt={"succes"}/>
+                    <img src={require("../../img/success.gif")} alt={"succes"}/>
                     <h3> Payment successful </h3>
                     <button onClick={this.returnToMenu}> Return to shop</button>
                 </div>
@@ -61,7 +61,7 @@ export class CheckoutResult extends React.Component<CheckoutResultProps, Checkou
         else{
             return (
                 <div className={"checkoutResult"}>
-                    <img src={require("../img/fail.png")} alt={"fail"}/>
+                    <img src={require("../../img/fail.png")} alt={"fail"}/>
                     <h3> Payment payment failed </h3>
                     <button onClick={this.returnToCart}> Return to cart </button>
                 </div>

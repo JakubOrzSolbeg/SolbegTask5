@@ -1,13 +1,13 @@
 import React from 'react';
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+import Header from "./components/Shared/Header";
+import Footer from "./components/Shared/Footer";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
-import Shop from "./components/Shop";
+import Shop from "./pages/Shop";
 import ShopAppState from "./models/AppState";
-import {ShopCardList} from "./components/ShopCardList";
-import JwtTester from "./components/jwtTestet";
-import {OrderList2} from "./components/OrderList2";
-import {WorkerPanel} from "./components/WorkerPanel";
+import {ShopCardList} from "./components/Lists/ShopCardList";
+import JwtTester from "./pages/jwtTestet";
+import {OrderList2} from "./pages/OrderList2";
+import {WorkerPanel} from "./pages/WorkerPanel";
 
 export class App extends React.Component<any, ShopAppState> {
     state: ShopAppState= {

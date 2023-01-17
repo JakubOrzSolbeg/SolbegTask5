@@ -1,8 +1,8 @@
 import React from "react";
-import GetProductDetails from "../apiRequests/getProductDetails";
-import ProductDetails from "../models/ProductDetails";
-import Loader from "./Loader";
-import ConvertCurrency from "../utils/convertCurrency";
+import GetProductDetails from "../../apiRequests/getProductDetails";
+import ProductDetails from "../../models/ProductDetails";
+import Loader from "../Shared/Loader";
+import ConvertCurrency from "../../utils/convertCurrency";
 
 type ProductDetailedCardProps = {
     productId: number
@@ -44,7 +44,7 @@ export class ProductDetailedCard extends React.Component<ProductDetailedCardProp
 
     onPhotoError() {
         const someProperty: ProductDetails = this.state.data!;
-        someProperty.photoUrl = require("../img/placeholder-image.png")
+        someProperty.photoUrl = require("../../img/placeholder-image.png")
         this.setState({data: someProperty})
     }
 

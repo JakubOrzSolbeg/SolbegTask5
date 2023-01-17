@@ -89,7 +89,7 @@ main{
   display: flex;
   flex-wrap: wrap;
   overflow-y: scroll;
-  justify-content: start;
+  justify-content: flex-start;
   padding: 10px;
 }
 
@@ -153,9 +153,10 @@ main{
   justify-content: center;
   align-items: stretch;
   position: relative;
-  height: 300px;
-  width: 300px;
-  background: linear-gradient(180deg, rgb(211, 158, 224) 0%, rgb(159, 47, 178) 100%);
+  /*height: 300px;*/
+  /*width: 300px;*/
+  padding: 10px;
+  background: linear-gradient(180deg, rgb(152, 107, 164) 0%, rgb(159, 47, 178) 100%);
   border-radius: 20px;
 }
 
@@ -278,6 +279,13 @@ input[type=submit]:disabled, input[type=submit]:disabled:hover{
 
 .checkoutResult > img{
   width: 50%;
+}
+
+.login-card{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
 }
 
 .decision-buttons{
@@ -413,4 +421,23 @@ h1, h2, h3, form{
 .pending-order > button.reject{
   background: radial-gradient(ellipse farthest-corner at right bottom, #fe3737 0%, #fd4231 8%, #9f3a28 30%, #8a3a2f 40%, transparent 80%),
   radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #ffacac 8%, #d16464 25%, #5d1f2a 62.5%, #5d4a1f 100%);
+}
+
+.search-box{
+  margin: 5px;
+}
+
+.search-box > form{
+  display: flex;
+  gap: 7px;
+  flex-direction: column;
+}
+
+.search-box > form > b{
+  padding: 2px;
+  border-bottom: #9f7928 solid 1px;
+}
+
+.search-box > form > input[type=submit]{
+  font-size: 1.2em;
 }
